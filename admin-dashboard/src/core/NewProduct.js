@@ -59,7 +59,7 @@ const NewProduct = () => {
         "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg"
       );
 
-      await axios.post("http://pf-15a.up.railway.app/api/product", formData, {
+      await axios.post("https://pf-15a.up.railway.app/api/product", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
