@@ -4,6 +4,13 @@ import { Navigate } from "react-router-dom";
 import { signin } from "./api-auth.js";
 
 export default function Signin(props) {
+  const divStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "50vh", // Adjust the height as needed
+  };
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -35,18 +42,15 @@ export default function Signin(props) {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  // const { from } = props.location.state || {
-  //   from: {
-  //     pathname: "/",
-  //   },
-  // };
-  // const { redirectToReferrer } = values;
-  // if (redirectToReferrer) {
-  //   return <Navigate to={from} />;
-  // }
+  const { redirectToReferrer } = values;
+  if (redirectToReferrer) {
+    return <Navigate to="/dashboard" />;
+  }
 
   return (
-    <div>
+    <div style={divStyle}>
+      <h1>Welcome admin.</h1>
+      <h2>please log in</h2>
       <form onSubmit={clickSubmit}>
         <label htmlFor="email" id="email-label">
           Email:

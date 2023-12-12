@@ -2,12 +2,7 @@ import config from "../config/config";
 
 const signin = async (user) => {
   try {
-    console.log(
-      "fetching: ",
-      `${config.serverURL}/auth/signin/`,
-      JSON.stringify(user)
-    );
-    let response = await fetch(`http://${config.serverURL}/auth/signin/`, {
+    let response = await fetch(`https://${config.serverURL}/auth/signin/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
