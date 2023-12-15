@@ -28,6 +28,10 @@ const NewProduct = () => {
       setPreviewImage(URL.createObjectURL(selectedFile));
   }, [selectedFile]);
 
+  useEffect(() => {
+    console.log(values);
+  }, [values]);
+
   const handleChange = (name) => (event) => {
     const value = name === "photo" ? event.target.files[0] : event.target.value;
     if (name === "photo") {
@@ -37,9 +41,9 @@ const NewProduct = () => {
     console.log(values);
   };
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
+  // const handleFileChange = (event) => {
+  //   setSelectedFile(event.target.files[0]);
+  // };
 
   const handleUpload = async () => {
     try {
@@ -59,7 +63,7 @@ const NewProduct = () => {
         "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg"
       );
 
-      await axios.post("http://localhost:3001/api/product", formData, {
+      await axios.post("https://pf-15a.up.railway.app/api/product", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -69,6 +73,18 @@ const NewProduct = () => {
     } catch (error) {
       console.error("Error uploading image:", error);
       alert("Error uploading image");
+    } finally {
+      setValues({
+        title: "",
+        price: "",
+        stock: "",
+        description: "",
+        category: "",
+      });
+      setSelectedFile(null);
+      setPreviewImage(
+        "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg"
+      );
     }
   };
 
@@ -90,19 +106,34 @@ const NewProduct = () => {
       </button>
       <div style={divStyle}>
         <label htmlFor="title">Title: </label>
-        <input type="text" id="title" onChange={handleChange("title")} />
+        <input
+          type="text"
+          id="title"
+          onChange={handleChange("title")}
+          value={values.title}
+        />
         <br />
         <label htmlFor="price">Price: </label>
-        <input type="text" id="price" onChange={handleChange("price")} />
+        <input
+          type="text"
+          id="price"
+          onChange={handleChange("price")}
+          value={values.price}
+        />
         <br />
         <label htmlFor="stock">Stock: </label>
-        <input type="text" id="stock" onChange={handleChange("stock")} />
+        <input
+          type="text"
+          id="stock"
+          onChange={handleChange("stock")}
+          value={values.stock}
+        />
         <br />
         <label htmlFor="description">Description: </label>
-        <textarea id="description" onChange={handleChange("Description")} />
+        <textarea id="description" onChange={handleChange("description")} />
         <br />
         <label for="cars">Category:</label>
-        <select id="category" onChange={handleChange("Description")}>
+        <select id="category" onChange={handleChange("category")}>
           <option value="657122b7fe7c6097f5167de9" selected>
             Ropa hombre
           </option>
