@@ -8,6 +8,7 @@ import UserCard from "../components/UserCard";
 import ProductCard from "../components/ProductCard";
 import CategoryCard from "../components/CategoryCard";
 import ReviewCard from "../components/ReviewCard";
+import config from "../config/config";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -17,64 +18,42 @@ const Dashboard = () => {
   const [reviews, setReviewsList] = useState([]);
   const [test, setTest] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [imageSrc, setImageSrc] = useState("");
 
-  useEffect(async () => {
-    const fetchUserList = async () => {
-      try {
-        setLoading(true);
-        const data = await usersList();
-        setUserList(data);
-      } catch (error) {
-        console.log("Error fetching user list: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    const fetchProductList = async () => {
-      try {
-        setLoading(true);
-        const data = await productsList();
-        setProductList(data);
-      } catch (error) {
-        console.log("Error fetching product list: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    const fetchCategoryList = async () => {
-      try {
-        setLoading(true);
-        const data = await categoryList();
-        setCategoriesList(data);
-      } catch (error) {
-        console.log("Error fetching product list: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    const fetchReviewsList = async () => {
-      try {
-        setLoading(true);
-        const data = await reviewList();
-        console.log("2 - despues del await: ", data);
-        setTest(data);
-        console.log("3 - despues del set:", test);
-      } catch (error) {
-        console.log("Error fetching reviews: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    const fetchData = async () => {
-      await fetchUserList();
-      await fetchProductList();
-      await fetchCategoryList();
-      await fetchReviewsList();
-    };
+  // useEffect(async () => {
+  //   const fetchProductList = async () => {
+  //     try {
+  //       const data = await productsList();
+  //       console.log("product list", data);
+  //       setProductList(data);
+  //     } catch (error) {
+  //       console.log("Error fetching product list: ", error);
+  //     }
+  //   };
 
-    await fetchData();
-    console.log("4 - despues del fetch", test);
-  }, []);
+  //   const fetchData = async () => {
+  //     await fetchProductList();
+  //     setLoading(false);
+  //   };
+
+  //   await fetchData();
+
+  //   // Move the logic that depends on the updated state here
+  //   setProductList((prevProductList) => {
+  //     const last = prevProductList.pop();
+  //     console.log("el ultimo product: ", last.photo);
+
+  //     setImageSrc(
+  //       `http://${config.serverURL}/api/product/photo/657bb0736a078afa6cfc7f0d`
+  //     );
+
+  //     return prevProductList; // Return the updated array
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log(imageSrc);
+  // }, imageSrc);
 
   const onClickProduct = () => {
     console.log("New product");
@@ -94,6 +73,9 @@ const Dashboard = () => {
       <section>
         <div>
           <h2>DASHBOARD</h2>
+          <img
+            src={`http://${config.serverURL}/api/product/photo/657bb0736a078afa6cfc7f0d`}
+          ></img>
         </div>
       </section>
       <section>
@@ -149,7 +131,7 @@ const Dashboard = () => {
                 columnGap: "16px",
               }}
             >
-              {productList.map((product) => (
+              {/* {productList.map((product) => (
                 <ProductCard
                   key={product._id}
                   id={product._id}
@@ -159,7 +141,7 @@ const Dashboard = () => {
                   description={product.description}
                   photo={product.photo}
                 />
-              ))}
+              ))} */}
             </ul>
           )}
         </fieldset>

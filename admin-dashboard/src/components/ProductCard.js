@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import trashIcon from "../assets/images/trash.svg";
 import editIcon from "../assets/images/edit.svg";
 import SwitchButton from "./SwitchButton";
 
 const ProductCard = (props) => {
-  // const [imageSrc, setImageSrc] = useState(null);
-  // console.log(props.photo, props.image);
-  // // const base64Image = "";
-  // // const imgSrc = props.image;
+  const [imageSrc, setImageSrc] = useState(null);
+  // console.log(props.photo, typeof props.photo, props.image);
+  // const base64Image = "";
+  // const imgSrc = props.image;
   // if (props.photo !== undefined) {
-  //   const base64Image = props.photo.data.toString("base64");
+  //   console.log(typeof props.photo);
+
   //   setImageSrc(`data:${props.photo.contentType};base64,${base64Image}`);
   // }
+  // useEffect(() => {
+  //   if (props.photo && props.photo.data && props.photo.contentType) {
+  //     const base64Image = props.photo.data.toString("base64");
+  //     setImageSrc(`data:${props.photo.contentType};base64,${base64Image}`);
+  //   } else {
+  //     console.log("Invalid photo object or missing contentType");
+  //     console.log("props.photo", props.photo);
+  //   }
+  // }, []);
+
   return (
     <div>
       <div

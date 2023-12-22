@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import config from "../config/config";
 
 const NewProduct = () => {
   const divStyle = {
@@ -51,28 +52,45 @@ const NewProduct = () => {
         alert("Please select an image");
         return;
       }
-      const formData = new FormData();
-      selectedFile && formData.append("photo", selectedFile);
-      values.title && formData.append("title", values.title);
-      values.price && formData.append("price", values.price);
-      values.stock && formData.append("stock", values.stock);
-      values.description && formData.append("description", values.description);
-      values.category && formData.append("category", values.category);
-      formData.append(
+
+      const formDataPhoto = new FormData();
+      selectedFile && formDataPhoto.append("photoData", selectedFile);
+      formDataPhoto.append("name", selectedFile.name);
+      console.log("photo name: ", selectedFile.name);
+
+      console.log("uploading the photo first....");
+      const photoResponse = await axios.post(
+        `${config.serverURL}/api/photos`,
+        formDataPhoto,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("photo uploaded, id: ", photoResponse.id, photoResponse);
+
+      console.log("creating the new product");
+      const formDataProduct = new FormData();
+      values.title && formDataProduct.append("title", values.title);
+      values.price && formDataProduct.append("price", values.price);
+      values.stock && formDataProduct.append("stock", values.stock);
+      values.description &&
+        formDataProduct.append("description", values.description);
+      values.category && formDataProduct.append("category", values.category);
+      formDataProduct.append(
         "image",
-        "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg"
+        `https://pf-15a.up.railway.app/api/photos/${photoResponse.data.id}`
       );
 
-      await axios.post("https://pf-15a.up.railway.app/api/product", formData, {
+      await axios.post(`${config.serverURL}/api/product`, formDataProduct, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      alert("Image uploaded successfully");
+      alert("New product successfully created");
     } catch (error) {
       console.error("Error uploading image:", error);
-      alert("Error uploading image");
     } finally {
       setValues({
         title: "",
@@ -82,9 +100,7 @@ const NewProduct = () => {
         category: "",
       });
       setSelectedFile(null);
-      setPreviewImage(
-        "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg"
-      );
+      setPreviewImage(config.previewImageURL);
     }
   };
 
